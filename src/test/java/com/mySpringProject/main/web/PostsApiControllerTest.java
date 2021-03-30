@@ -15,8 +15,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -90,5 +93,21 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(exchangedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(exchangedContent);
+    }
+
+    @Test
+    public void Post_is_deleted() {
+        Posts savedPosts = postsRepository.save(Posts.builder()
+                .title("delete")
+                .content("delete")
+                .author("delete")
+                .build());
+
+        String url = "http://localhost:" + port + "/api/v1/posts/" + savedPosts.getId();
+
+        restTemplate.delete(url);
+
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.size()).isEqualTo(0);
     }
 }
