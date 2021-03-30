@@ -1,11 +1,14 @@
 package com.mySpringProject.main.web;
 
 import com.mySpringProject.main.service.posts.PostsService;
+import com.mySpringProject.main.web.dto.PostsListResponseDto;
 import com.mySpringProject.main.web.dto.PostsResponseDto;
 import com.mySpringProject.main.web.dto.PostsSaveRequestDto;
 import com.mySpringProject.main.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
